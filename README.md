@@ -1,6 +1,6 @@
 # Validation Example
 
-This project demonstrates a custom validation middleware implementation in Go using reflection and struct tags, without external dependencies.
+This project demonstrates a custom validation middleware implementation in Go using reflection and struct tags, without external dependencies other than [testify](https://github.com/stretchr/testify) for unit tests.
 
 ## Features
 
@@ -11,7 +11,7 @@ This project demonstrates a custom validation middleware implementation in Go us
   - `email`: Must match email format
   - `min`: Minimum length requirement
 - Clean separation of concerns
-- Fully tested with unit and integration tests
+- Tested with unit tests
 
 ## Usage
 
