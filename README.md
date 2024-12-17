@@ -13,11 +13,15 @@ This project demonstrates a custom validation middleware implementation in Go us
 - Clean separation of concerns
 - Fully tested with unit and integration tests
 
-## Project Structure
-
 ## Usage
 
-### Running the Server
+### Unit Test
+
+```bash
+make test
+```
+
+### Execution
 
 ```bash
 go run .
