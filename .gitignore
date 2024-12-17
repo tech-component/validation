@@ -1,1 +1,6 @@
+# ide files
 .idea
+
+# mocked files
+mocks
+

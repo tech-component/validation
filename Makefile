@@ -1,6 +1,6 @@
 .PHONY: docker-start docker-stop
 .PHONY: golang-imports migrate-new migrate-install
-.PHONY: test test-html-output
+.PHONY: mock-gen mock-install test test-html-output
 
 MIGRATE_VERSION=v4.18.1
 SHELL := /bin/bash
@@ -23,7 +23,13 @@ migrate-install:
 migrate-new:
 	migrate create -ext sql -dir assets/files/migrations $(NAME)
 
-test:
+mock-gen:
+	rm -rf mocks && mkdir -p mocks && go generate ./...
+
+mock-install:
+	go install github.com/matryer/moq@v0.5.1
+
+test: mock-gen
 	go test -cover ./...
 
 test-html-output:

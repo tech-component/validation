@@ -9,12 +9,14 @@ import (
 )
 
 type Server struct {
-	validator interfaces.Validator
+	repository interfaces.Repository
+	validator  interfaces.Validator
 }
 
-func NewServer(validator interfaces.Validator) *Server {
+func NewServer(repository interfaces.Repository, validator interfaces.Validator) *Server {
 	return &Server{
-		validator: validator,
+		repository: repository,
+		validator:  validator,
 	}
 }
 
@@ -22,8 +24,14 @@ func (s *Server) Validator() interfaces.Validator {
 	return s.validator
 }
 
-func (s *Server) CreateUser(user domain.User, w http.ResponseWriter, _ *http.Request) {
-	// TODO: save the user to a database
+func (s *Server) CreateUser(user domain.User, w http.ResponseWriter, r *http.Request) {
+	// save the user to a database
+	id, _, err := s.repository.CreateUser(r.Context(), user)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	user.ID = id
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusCreated)
 	if err := json.NewEncoder(w).Encode(user); err != nil {

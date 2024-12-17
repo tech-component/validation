@@ -2,7 +2,10 @@ package main
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
+	"github.com/mauleyzaola/validation/mocks"
+	"github.com/mauleyzaola/validation/validators"
 	"net/http"
 	"net/http/httptest"
 	"strings"
@@ -14,6 +17,13 @@ import (
 )
 
 func TestCreateUser(t *testing.T) {
+	// assume mocked repository always succeeds
+	repository := &mocks.RepositoryMock{
+		CreateUserFunc: func(ctx context.Context, user domain.User) (string, bool, error) {
+			return "55624c8b-c0b6-4562-a51b-68a61c73e3c6", true, nil
+		},
+	}
+	validator := validators.NewValidator()
 	tests := []struct {
 		name           string
 		method         string
@@ -29,7 +39,7 @@ func TestCreateUser(t *testing.T) {
 				Password: "password123",
 			},
 			expectedStatus: http.StatusCreated,
-			expectedBody:   `{"email":"test@example.com","password":"password123"}`,
+			expectedBody:   `{"id":"55624c8b-c0b6-4562-a51b-68a61c73e3c6","email":"test@example.com","password":"password123"}`,
 		},
 		{
 			name:   "invalid email",
@@ -87,7 +97,7 @@ func TestCreateUser(t *testing.T) {
 
 			rr := httptest.NewRecorder()
 
-			handler := createUserHandler()
+			handler := createUserHandler(repository, validator)
 			handler.ServeHTTP(rr, req)
 
 			assert.Equal(t, tt.expectedStatus, rr.Code, "handler returned wrong status code")
