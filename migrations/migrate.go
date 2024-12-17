@@ -2,9 +2,10 @@ package migrations
 
 import (
 	"errors"
+	"io/fs"
+
 	"github.com/golang-migrate/migrate/v4"
 	"github.com/golang-migrate/migrate/v4/source/iofs"
-	"io/fs"
 )
 
 func MigrateDb(files fs.FS, filePath, dbURL string) error {

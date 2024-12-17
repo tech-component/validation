@@ -1,4 +1,4 @@
-.PHONY: docker-start docker-stop
+.PHONY: docker-logs docker-start docker-stop
 .PHONY: golang-imports migrate-new migrate-install
 .PHONY: mock-gen mock-install test test-html-output
 
@@ -8,14 +8,23 @@ SHELL := /bin/bash
 include .env
 export
 
+docker-build:
+	docker compose build
+
+docker-logs:
+	docker compose logs -f
+
 docker-start:
 	docker compose up -d
 
 docker-stop:
-	docker compost down --remove-orphans
+	docker compose down --remove-orphans
 
 golang-imports:
 	goimports -w .
+
+install:
+	go install
 
 migrate-install:
 	go install -tags 'postgres' github.com/golang-migrate/migrate/v4/cmd/migrate@$(MIGRATE_VERSION)

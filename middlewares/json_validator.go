@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/mauleyzaola/validation/interfaces"
+	"github.com/tech-component/validation/interfaces"
 )
 
 func JSONValidator[T any](validator interfaces.Validator, next func(T, http.ResponseWriter, *http.Request)) http.HandlerFunc {

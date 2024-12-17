@@ -1,19 +1,22 @@
 # Validation Example
 
-This project demonstrates a custom validation middleware implementation in Go using reflection and struct tags, without external dependencies other than [testify](https://github.com/stretchr/testify) for unit tests.
-
-## Features
-
-- Custom struct validation using tags
-- HTTP middleware for request validation
-- Support for multiple validation rules:
-  - `required`: Field cannot be empty
-  - `email`: Must match email format
-  - `min`: Minimum length requirement
-- Clean separation of concerns
-- Tested with unit tests
+This project demonstrates a custom validation middleware implementation in Go using reflection and struct tags.
 
 ## Usage
+
+### Execution
+
+```bash
+make docker-start docker-logs
+```
+
+The server will start on port 8080 (read from [.env](.env)).
+
+To stop services, run this command:
+
+```bash
+make docker-stop
+```
 
 ### Unit Test
 
@@ -21,18 +24,10 @@ This project demonstrates a custom validation middleware implementation in Go us
 make test
 ```
 
-### Execution
-
-```bash
-go run .
-```
-
-The server will start on port 8080.
-
 ### API Endpoints
 
 #### Create User
-```bash
+```
 POST /users
 Content-Type: application/json
 
@@ -53,12 +48,6 @@ type User struct {
 }
 ```
 
-### Testing
-
-Run all tests:
-```bash
-go test ./...
-```
 
 ## Examples
 
@@ -67,8 +56,8 @@ go test ./...
 curl -X POST http://localhost:8080/users \
   -H "Content-Type: application/json" \
   -d '{
-    "Email": "test@example.com",
-    "Password": "password123"
+    "email": "test@example.com",
+    "password": "password123"
   }'
 ```
 
@@ -77,8 +66,8 @@ curl -X POST http://localhost:8080/users \
 curl -X POST http://localhost:8080/users \
   -H "Content-Type: application/json" \
   -d '{
-    "Email": "invalid-email",
-    "Password": "short"
+    "email": "invalid-email",
+    "password": "short"
   }'
 ```
 

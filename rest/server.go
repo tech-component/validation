@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/mauleyzaola/validation/domain"
-	"github.com/mauleyzaola/validation/interfaces"
+	"github.com/tech-component/validation/domain"
+	"github.com/tech-component/validation/interfaces"
 )
 
 type Server struct {

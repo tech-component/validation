@@ -4,7 +4,7 @@ volumes:
 
 services:
 
-  postgres:
+  db:
     image: postgres:14
     container_name: postgres
     healthcheck:
@@ -19,3 +19,17 @@ services:
       PGUSER: postgres
     ports:
       - "5432:5432"
+
+  validation:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: validation
+    entrypoint: [ "/app/service" ]
+    depends_on:
+      db:
+        condition: service_healthy
+    env_file:
+      - .env
+    ports:
+      - "${PORT}:${PORT}"

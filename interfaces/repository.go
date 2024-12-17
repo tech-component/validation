@@ -2,7 +2,8 @@ package interfaces
 
 import (
 	"context"
-	"github.com/mauleyzaola/validation/domain"
+
+	"github.com/tech-component/validation/domain"
 )
 
 //go:generate moq -out ../mocks/repository.go -pkg mocks . Repository
